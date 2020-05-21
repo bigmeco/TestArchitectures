@@ -4,64 +4,84 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
-import androidx.ui.core.Text
+import androidx.compose.state
 import androidx.ui.core.setContent
+import androidx.ui.layout.Column
+import androidx.ui.material.Button
 import androidx.ui.material.MaterialTheme
 import androidx.ui.tooling.preview.Preview
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import androidx.compose.MutableState
+import androidx.ui.foundation.Text
 
+var amount: MutableState<String>? = null
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), IViewState {
+    val intent: IEvent = Intent()
+    private var activity: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://www.boredapi.com/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-        .build()
 
+        intent.eventState(Event.Init)
+        Log.d("tedfgdfgfgst", "response.body()?.activity")
 
-
-//        GlobalScope.launch(Dispatchers.Main) {
-            val service: Data = retrofit.create(Data::class.java)
-            service.search().enqueue(object : Callback<Repo> {
-
-
-                override fun onResponse(call: Call<Repo>, response: Response<Repo>) {
-                    Log.d("Tag", response.body()?.activity)
-
-                }
-
-                override fun onFailure(call: Call<Repo>, t: Throwable) {
-                    Log.d("Tag", t.message)
-
-                }
-            })
-//        }
 
         setContent {
+            amount = state { activity ?: "" }
+
             MaterialTheme {
-                Greeting("Android")
+                Greeting(amount!!.value, intent)
+                Log.d("tedfgdfgfgst", "response.body()?.activity")
+            }
+        }
+
+//        GlobalScope.launch(Dispatchers.Main) {
+
+//        }
+
+
+    }
+
+    override fun render(state: ViewState) {
+        // Не вижу в этом смысла когда можно передать state
+        when (state) {
+            is ViewState.InitState -> {
+                Log.d("tedfgdfgfgst", "LoadingState")
+
+            }
+            is ViewState.LoadedState -> {
+                Log.d("tedfgdfgfgst", "LoadedState")
+
+            }
+            is ViewState.ErrorState -> {
+                Log.d("tedfgdfgfgst", "ErrorState")
+
+            }
+            is ViewState.NoItemState -> {
+                Log.d("tedfgdfgfgst", "NoItemState")
+
             }
         }
     }
+
+
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun Greeting(name: String, intent: IEvent) {
+    Column {
+        Text(text = "Hello $name!")
+        Button(onClick = {
+            intent.eventState(Event.Click(amount!!))
+        },
+            text = { Text(text = "Загрузить") })
+    }
 }
 
 @Preview
 @Composable
 fun DefaultPreview() {
     MaterialTheme {
-        Greeting("Android")
+        // Greeting("Android",intent = Event())
     }
 }
