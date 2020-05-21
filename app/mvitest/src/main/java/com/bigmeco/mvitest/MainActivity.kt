@@ -23,22 +23,14 @@ class MainActivity : AppCompatActivity(), IViewState {
         super.onCreate(savedInstanceState)
 
         intent.eventState(Event.Init)
-        Log.d("tedfgdfgfgst", "response.body()?.activity")
-
 
         setContent {
             amount = state { activity ?: "" }
-
             MaterialTheme {
                 Greeting(amount!!.value, intent)
-                Log.d("tedfgdfgfgst", "response.body()?.activity")
+                Log.d("ПридуматьTeg", "response.body()?.activity")
             }
         }
-
-//        GlobalScope.launch(Dispatchers.Main) {
-
-//        }
-
 
     }
 
@@ -46,19 +38,19 @@ class MainActivity : AppCompatActivity(), IViewState {
         // Не вижу в этом смысла когда можно передать state
         when (state) {
             is ViewState.InitState -> {
-                Log.d("tedfgdfgfgst", "LoadingState")
+                Log.d("ПридуматьTeg", "LoadingState")
 
             }
             is ViewState.LoadedState -> {
-                Log.d("tedfgdfgfgst", "LoadedState")
+                Log.d("ПридуматьTeg", "LoadedState")
 
             }
             is ViewState.ErrorState -> {
-                Log.d("tedfgdfgfgst", "ErrorState")
+                Log.d("ПридуматьTeg", "ErrorState")
 
             }
             is ViewState.NoItemState -> {
-                Log.d("tedfgdfgfgst", "NoItemState")
+                Log.d("ПридуматьTeg", "NoItemState")
 
             }
         }

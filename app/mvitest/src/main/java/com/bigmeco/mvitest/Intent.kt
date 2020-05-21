@@ -9,7 +9,7 @@ class Intent : IEvent {
     override fun eventState(event: Event) {
         when (event) {
             is Event.Init -> {
-                Log.d("tedfgdfgfgst", "Fetch")
+                Log.d("ПридуматьTeg", "Fetch")
                 rest.render(Logic.Init)
                 val viewState: IViewState = MainActivity()
                 viewState.render(ViewState.InitState)

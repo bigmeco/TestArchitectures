@@ -27,11 +27,11 @@ class Rest:IRest {
 
                     override fun onResponse(call: Call<Repo>, response: Response<Repo>) {
                         amount?.value = response.body()?.activity.toString()
-                        Log.d("tedfgdfgfgst", response.body()?.activity)
+                        Log.d("ПридуматьTeg", response.body()?.activity)
                     }
 
                     override fun onFailure(call: Call<Repo>, t: Throwable) {
-                        Log.d("tedfgdfgfgst",  "tt "+  t.message)
+                        Log.d("ПридуматьTeg",  "tt "+  t.message)
 
                     }
                 })
