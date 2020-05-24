@@ -11,12 +11,14 @@ class Intent : IEvent {
             is Event.Init -> {
                 Log.d("ПридуматьTeg", "Fetch")
                 rest.render(Logic.Init)
-                val viewState: IViewState = MainActivity()
-                viewState.render(ViewState.InitState)
+
 
             }
-            is Event.Click -> {
-                rest.render(Logic.LoadingData(amount = amount!!))
+            is Event.ClickMutableState -> {
+                rest.render(Logic.LoadingData(amount = event.amount!!))
+            }
+            is Event.ClickSealedClass -> {
+                rest.render(Logic.LoadingDataSealed(viewState = event.viewState!!))
             }
 
         }

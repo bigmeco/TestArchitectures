@@ -12,22 +12,26 @@ import androidx.ui.material.MaterialTheme
 import androidx.ui.tooling.preview.Preview
 import androidx.compose.MutableState
 import androidx.ui.foundation.Text
+import androidx.ui.graphics.Color
+import androidx.ui.material.Divider
+import androidx.ui.unit.dp
 
 var amount: MutableState<String>? = null
 
 class MainActivity : AppCompatActivity(), IViewState {
     val intent: IEvent = Intent()
     private var activity: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val viewState: IViewState = this
+        viewState.render(ViewState.InitState)
 
         intent.eventState(Event.Init)
 
         setContent {
             amount = state { activity ?: "" }
             MaterialTheme {
-                Greeting(amount!!.value, intent)
+                Greeting(amount!!.value, intent, viewState)
                 Log.d("ПридуматьTeg", "response.body()?.activity")
             }
         }
@@ -35,18 +39,20 @@ class MainActivity : AppCompatActivity(), IViewState {
     }
 
     override fun render(state: ViewState) {
-        // Не вижу в этом смысла когда можно передать state
         when (state) {
             is ViewState.InitState -> {
                 Log.d("ПридуматьTeg", "LoadingState")
 
             }
             is ViewState.LoadedState -> {
-                Log.d("ПридуматьTeg", "LoadedState")
+                amount?.value = state.item.activity
+                Log.d("ПридуматьTeg", state.item.activity)
 
             }
             is ViewState.ErrorState -> {
-                Log.d("ПридуматьTeg", "ErrorState")
+                amount?.value = state.error
+
+                Log.d("ПридуматьTeg", state.error)
 
             }
             is ViewState.NoItemState -> {
@@ -60,13 +66,24 @@ class MainActivity : AppCompatActivity(), IViewState {
 }
 
 @Composable
-fun Greeting(name: String, intent: IEvent) {
+fun Greeting(
+    name: String,
+    intent: IEvent,
+    viewState: IViewState
+) {
     Column {
         Text(text = "Hello $name!")
+        Divider(color = Color.Transparent, thickness = 32.dp)
         Button(onClick = {
-            intent.eventState(Event.Click(amount!!))
+            intent.eventState(Event.ClickMutableState(amount!!))
         },
-            text = { Text(text = "Загрузить") })
+            text = { Text(text = "Загрузить через MutableState") })
+        Divider(color = Color.Transparent, thickness = 32.dp)
+
+        Button(onClick = {
+            intent.eventState(Event.ClickSealedClass(viewState))
+        },
+            text = { Text(text = "Загрузить через sealed класс") })
     }
 }
 
