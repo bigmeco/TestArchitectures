@@ -1,3 +1,4 @@
+include ':app:dagger2test'
 include ':app:mvitest'
 include ':app'
 rootProject.name = "TestArchitectures"
