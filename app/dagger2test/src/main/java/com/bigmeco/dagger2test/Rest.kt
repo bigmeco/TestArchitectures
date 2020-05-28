@@ -7,14 +7,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class Rest (var url: String):IRest {
+class Rest (var url: String, var retrofit: Retrofit):IRest {
+
+
 
     override fun loadingData(respons: (String) -> Unit) {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(url)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+
 
         val service = retrofit.create(Data::class.java)
         service.search().enqueue(object : Callback<Repo> {

@@ -1,15 +1,14 @@
 package com.bigmeco.dagger2test.DI.module
 
-import android.content.Context
 import com.bigmeco.dagger2test.IRest
 import com.bigmeco.dagger2test.Rest
 import dagger.Module
 import dagger.Provides
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [RetrofitModule::class])
 class AppModule(var url: String) {
-
 
     @Provides
     @Singleton
@@ -18,5 +17,7 @@ class AppModule(var url: String) {
     }
     @Provides
     @Singleton
-    fun provideIRest():IRest = Rest(url = url)
+    fun provideIRest(retrofit: Retrofit):IRest = Rest(url = url, retrofit = retrofit)
+
+
 }
