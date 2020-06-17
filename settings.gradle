@@ -1,3 +1,4 @@
+include ':app:coroutinestest'
 include ':app:dagger2test'
 include ':app:mvitest'
 include ':app'
