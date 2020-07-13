@@ -9,6 +9,7 @@ import androidx.ui.material.MaterialTheme
 import androidx.ui.tooling.preview.Preview
 
 
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +29,7 @@ fun Greeting(name: String) {
 
 @Preview
 @Composable
-fun DefaultPreview() {
+fun DefaultPreview1() {
     MaterialTheme {
         Greeting("Android")
     }
