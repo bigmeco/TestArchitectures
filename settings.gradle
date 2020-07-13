@@ -1,5 +1,5 @@
-include ':app:coroutinestest'
-include ':app:dagger2test'
-include ':app:mvitest'
+include ':coroutinestest'
+include ':dagger2test'
+include ':mvitest'
 include ':app'
 rootProject.name = "TestArchitectures"
