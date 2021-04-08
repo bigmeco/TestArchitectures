@@ -1,3 +1,4 @@
+include ':mvvmtest'
 include ':coroutinestest'
 include ':dagger2test'
 include ':mvitest'
